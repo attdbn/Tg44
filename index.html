@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plat AR - TG44</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body { margin:0; font-family:system-ui,Arial; background:#fafafa; display:flex; align-items:center; justify-content:center; height:100vh; }
+    .card { width:90vw; max-width:720px; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.12); overflow:hidden; }
+    header { padding:12px 16px; display:flex; justify-content:space-between; align-items:center; }
+    h1 { margin:0; font-size:18px; }
+    .viewer { width:100%; height:60vh; background:#222; display:flex; align-items:center; justify-content:center; }
+    model-viewer { width:100%; height:100%; }
+    .footer { padding:12px; display:flex; gap:8px; justify-content:center; }
+    a.btn { padding:10px 14px; background:#007bff; color:#fff; border-radius:8px; text-decoration:none; }
+    @media (min-width:900px) { .viewer{ height:70vh; } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <h1>Plat : TG44</h1>
+      <small>Tap pour AR (Android / iPhone)</small>
+    </header>
+
+    <div class="viewer">
+      <model-viewer id="mv"
+        src="https://cdn.jsdelivr.net/gh/attdbn/Tg44/Tg4_textured_mesh_glb-v1%20(4).glb"
+        ios-src="https://cdn.jsdelivr.net/gh/attdbn/Tg44/Tg4_textured_mesh_lowpoly_usdz.usdz"
+        poster="https://cdn.jsdelivr.net/gh/attdbn/Tg44/poster.jpg"
+        alt="Plat 3D"
+        camera-controls
+        auto-rotate
+        ar
+        ar-modes="scene-viewer quick-look webxr"
+        shadow-intensity="1">
+      </model-viewer>
+    </div>
+
+    <div class="footer">
+      <!-- Bouton Android Scene Viewer (optionnel) -->
+      <a id="sceneLink" class="btn" href="#" style="display:none;">Ouvrir en AR (Android)</a>
+
+      <!-- Fallback texte/info -->
+      <a class="btn" href="https://cdn.jsdelivr.net/gh/attdbn/Tg44/Tg4_textured_mesh_glb-v1%20(4).glb" target="_blank">Télécharger le GLB</a>
+    </div>
+  </div>
+
+<script>
+  const glbURL = 'https://cdn.jsdelivr.net/gh/attdbn/Tg44/Tg4_textured_mesh_glb-v1%20(4).glb';
+  const sceneIntent = 'intent://arvr.google.com/scene-viewer/1.0?file=' + encodeURIComponent(glbURL) +
+                      '#Intent;scheme=https;package=com.google.ar.core;end;';
+  const sceneBtn = document.getElementById('sceneLink');
+
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isChrome = /Chrome/i.test(navigator.userAgent);
+  if (isAndroid && isChrome) {
+    sceneBtn.style.display = 'inline-block';
+    sceneBtn.href = sceneIntent;
+  } else {
+    sceneBtn.style.display = 'none';
+  }
+</script>
+</body>
+</html>
